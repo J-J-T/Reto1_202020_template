@@ -16,7 +16,6 @@ with open(details_file, encoding="utf-8-sig") as csvfile:
 
 print("5- Req 5 - Entender un genero cinematografico")
 
-#2) Filtrar
 
 details_genero = lt.newList('SINGLE_LINKED', None)
 
@@ -31,24 +30,25 @@ while listiterator.hasNext(iter):
         lt.addFirst(details_genero, c)
         
 
-
-lista_peliculas=lt.addLast("ARRAY_LIST",None)
+lista_peliculas=lt.newList("ARRAY_LIST",None)
 numero_de_peliculas_genero = lt.size(details_genero)
 suma_vote_average = 0.0
+
 
 iter = listiterator.newIterator(details_genero)
 while listiterator.hasNext(iter):
     u = listiterator.next(iter)
-    lt.addLast(lista_peliculas,u["original_title"])
+    lt.addFirst(lista_peliculas,u["original_title"])
     suma_vote_average = suma_vote_average + float(u["vote_average"])
+    
 
 promedio_peliculas = 0
-if(numero_de_peliculas_director > 0):
-    promedio_peliculas = suma_vote_average/numero_de_peliculas_director
+if(numero_de_peliculas_genero > 0):
+    promedio_peliculas = suma_vote_average/numero_de_peliculas_genero
 
 
 print(lista_peliculas["elements"])
-print("Numero de peliculas de ese genero" + str(numero_de_peliculas_genero))
+print("Numero de peliculas de ese genero: " + str(numero_de_peliculas_genero))
 print("Promedio vote_average: " + str(promedio_peliculas))
 
 t1_stop = process_time() #tiempo final

@@ -30,7 +30,7 @@ import config as cf
 import sys
 import csv
 
-from ADT import list as lt
+from ADT import list as ltp
 from DataStructures import listiterator as it
 from DataStructures import liststructure as lt
 
@@ -63,24 +63,26 @@ def compareRecordIds (recordA, recordB):
 
 
 
-def loadCSVFile (file, cmpfunction):
-    lst=lt.newList("ARRAY_LIST", cmpfunction)
-    dialect = csv.excel()
-    dialect.delimiter=";"
-    try:
-        with open(  cf.data_dir + file, encoding="utf-8") as csvfile:
-            row = csv.DictReader(csvfile, dialect=dialect)
-            for elemento in row: 
-                lt.addLast(lst,elemento)
-    except:
-        print("Hubo un error con la carga del archivo")
-    return lst
+def loadMovies_casting ():
+    casting = lt.newList('SINGLE_LINKED', None)
+    # casting_file = "Data/MoviesCastingRaw-small.csv" 
+    casting_file = "Data/AllMoviesCastingRaw.csv"
+    with open(casting_file, encoding="utf-8-sig") as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            lt.addFirst(casting, row)
+    return casting
 
 
-def loadMovies ():
-    lst = loadCSVFile("theMoviesdb/movies-small.csv",compareRecordIds) 
-    print("Datos cargados, " + str(lt.size(lst)) + " elementos cargados")
-    return lst
+def loadMovies_details ():
+    details = lt.newList('SINGLE_LINKED', None)
+    # details_file = "Data/SmallMoviesDetailsCleaned.csv" 
+    details_file = "Data/AllMoviesDetailsCleaned.csv"
+    with open(details_file, encoding="utf-8-sig") as csvfile:
+        reader = csv.DictReader(csvfile, delimiter=';')
+        for row in reader:
+            lt.addFirst(details, row)
+    return details
 
 
 def main():
@@ -99,7 +101,8 @@ def main():
         if len(inputs)>0:
 
             if int(inputs[0])==1: #opcion 1
-                lstmovies = loadMovies()
+                casting = loadMovies_casting()
+                detalis= loadMovies_details()
 
             elif int(inputs[0])==2: #opcion 2
                 pass
