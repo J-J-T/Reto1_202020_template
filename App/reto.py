@@ -24,7 +24,7 @@ with open(details_file, encoding="utf-8-sig") as csvfile:
     for row in reader:
         lt.addFirst(details, row)
 #Requisito 3- Conocer un repositorio
-def conocer_un_director(casting,datails):
+def conocer_un_director(casting,details):
     casting_por_director = lt.newList('SINGLE_LINKED', None)
     director = input("Ingrese el director\n")
     t1_start = process_time()
@@ -74,7 +74,7 @@ def conocer_un_director(casting,datails):
 
 
 #Requisito 4- Conocer un actor
-def conocer_un_actor(casting,datails):
+def conocer_un_actor(casting,details):
 
     casting_por_actor = lt.newList('SINGLE_LINKED', None)
     actor = input("Ingrese el actor\n")
@@ -122,4 +122,42 @@ def conocer_un_actor(casting,datails):
     t1_stop = process_time() #tiempo final
     print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
 
+#5- Req 5 - Entender un genero cinematografico
 
+def Entender_un_genero(casting,details):
+    details_genero = lt.newList('SINGLE_LINKED', None)
+
+    genero = input("Ingrese el nombre del genero\n")
+
+    t1_start = process_time()
+
+    iter = listiterator.newIterator(details)
+    while listiterator.hasNext(iter):
+        c = listiterator.next(iter)
+        if genero in c["genres"]:
+            lt.addFirst(details_genero, c)
+
+
+    lista_peliculas=lt.newList("ARRAY_LIST",None)
+    numero_de_peliculas_genero = lt.size(details_genero)
+    suma_vote_average = 0.0
+
+
+    iter = listiterator.newIterator(details_genero)
+    while listiterator.hasNext(iter):
+        u = listiterator.next(iter)
+        lt.addFirst(lista_peliculas,u["original_title"])
+        suma_vote_average = suma_vote_average + float(u["vote_average"])
+
+
+    promedio_peliculas = 0
+    if(numero_de_peliculas_genero > 0):
+        promedio_peliculas = suma_vote_average/numero_de_peliculas_genero
+
+
+    print(lista_peliculas["elements"])
+    print("Numero de peliculas de ese genero: " + str(numero_de_peliculas_genero))
+    print("Promedio vote_average: " + str(promedio_peliculas))
+
+    t1_stop = process_time() #tiempo final
+    print("Tiempo de ejecución ",t1_stop-t1_start," segundos")
